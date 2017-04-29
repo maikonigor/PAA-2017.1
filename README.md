@@ -2,7 +2,7 @@
 
 Codes for project and algorithm analysis discipline - Academic Master degree in computer science (Ceará state university)
 
-## Convex Hull
+## Convex Hull - Monotone Chain / Andrew's Algorithm
 Implementation of Andrew's algorithm to find the convex hull with complexity O(n lg n)
 * References
  1. [Algorithm Implementation/Geometry/Convex hull/Monotone chain](https://en.wikibooks.org/wiki/Algorithm_Implementation/Geometry/Convex_hull/Monotone_chain)

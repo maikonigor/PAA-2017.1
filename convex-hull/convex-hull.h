@@ -47,6 +47,6 @@ coord2_t cross(const Point &O, const Point &A, const Point &B);
 /*
  * Retorna a lista de pontos do fecho convexo no sentido anti-horário
  */
-vector<Point> convex_hull(vector<Point> P);
+vector<Point> convex_hull(vector<Point> P, vector<Point> * differences);
 
 #endif /* CONVEX_HULL_H_ */

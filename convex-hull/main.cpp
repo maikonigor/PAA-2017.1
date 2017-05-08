@@ -5,7 +5,7 @@
  *      Author: maikon
  */
 
-#include <windows.h>
+//#include <windows.h>
 #include <GL/glut.h>
 #include <iostream>
 #include <stdio.h>
@@ -17,15 +17,16 @@
 #define ALTURA   600		/* Heigth */
 
 
-// Qtd máxima de texturas a serem usadas no programa
+// Qtd mï¿½xima de texturas a serem usadas no programa
 #define MAX_NO_TEXTURES 9
 
 #define CUBE_TEXTURE 0
 
 
 using namespace std;
+void Desenha(void);
 
-// vetor com os números das texturas
+// vetor com os nï¿½meros das texturas
 GLuint texture_id[MAX_NO_TEXTURES];
 
 double rotationX = 10.0;
@@ -35,31 +36,48 @@ int last_press_x = 0;
 int last_press_y = 0;
 double eye[3] = {10.0, 10.0, 50.0};
 double pos[4] = {-15,-5,5,15};
-vector<int> color;
+
 vector<double> eixoX;
 vector<double> eixoY;
 vector<Point> solution;
+vector<Point> contatenated;
 list< vector<Point> > listSolution;
-int contador=0;
+int contador=-1;
 int contadorColor=0;
 int nPoints=50;
 
-void criarEsfera(double x,double y){
+int event=1;
+
+int color [100][3];
+
+int colors[9][3] = {
+		{0.6, 0.8, 1.0}, //white
+		{0.0,0.0,0.0}, //black
+		{1.0, 0.0, 0.0}, //red
+		{1.0, 1.0, 0.0}, //yellow
+		{0.0, 1.0, 0.0}, //green
+		{0.0, 1.0, 1.0}, //cyan
+		{0.0, 0.0, 1.0}, //blue
+		{1.0, 0.0, 1.0}, //magenta
+		{0.5, 0.5, 0.5} // Gray
+};
+
+void criarEsfera(double x,double y, int colorNumer){
 
     glPushMatrix();
     glScalef(ex, ey, 1.0f);
     glTranslated(x,y,0);
 
-    glColor3f(0.0,0.0, 0.0);
+    glColor3f(colors[colorNumer][0], colors[colorNumer][1], colors[colorNumer][2]);
     glutSolidSphere(0.2,15,15);
     glPopMatrix();
 
 }
 
-void criarLinha(double x,double y, double z,double w,int color){
+void criarLinha(double x,double y, double z, double w, int colorNumer){
 
-    glColor3f(1.0,color, 1.0);
-
+    glColor3f(colors[colorNumer][0], colors[colorNumer][1], colors[colorNumer][2]);
+//	glColor3f(1.0,color,1.0);
     glLineWidth(1);
     glScalef(ex, ey, 1.0f);
     glBegin(GL_LINES);
@@ -67,7 +85,7 @@ void criarLinha(double x,double y, double z,double w,int color){
 	glVertex2i(z, w);
     glEnd();
 
-    glColor3f(1.0, 1.0, 1.0);
+//    glColor3f(1.0, 1.0, 1.0);
 
 }
 
@@ -88,9 +106,39 @@ void Desenha_Eixos_Coordenados()
 	glEnd();
 }
 
+void Desenha_solucao_concatenada(){
+	/* Limpa a janela de visualizaï¿½ï¿½o com a cor de fundo especificada */
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClear (GL_DEPTH_BUFFER_BIT );
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	gluLookAt(eye[0], eye[1], eye[2], /* eye */
+			  0.0, 5.0, 0.0,		/* look */
+			  0.0, 1.0, 0.0);		/* up */
+
+	/* Rotaciona os objetos para visualizar a 3 dimensï¿½o */
+	glRotatef(rotationY, 1.0, 0.0, 0.0); /* Rotaciona em torno do X */
+	glRotatef(rotationX, 0.0, 1.0, 0.0); /* Rotaciona em torno de Y */
+
+	contadorColor = 1;
+	for(int i=0; i<contatenated.size() -1;i++){
+	printf("pontos %f, %f\n", contatenated[i].x,contatenated[i].y);
+		criarEsfera(contatenated[i].x,contatenated[i].y, contadorColor);
+		criarEsfera(contatenated[i+1].x,contatenated[i+1].y, contadorColor);
+		criarLinha(contatenated[i].x,contatenated[i].y,contatenated[i+1].x,contatenated[i+1].y, contadorColor);
+	}
+	criarLinha(contatenated[contatenated.size()-1].x,contatenated[contatenated.size()-1].y,contatenated[0].x,contatenated[0].y, contadorColor);
+
+	Desenha_Eixos_Coordenados();
+	glFlush();
+}
+
 void Desenha(void)
 {
-	/* Limpa a janela de visualização com a cor de fundo especificada */
+	printf("FunÃ§Ã£o Desenha\n");
+	/* Limpa a janela de visualizaï¿½ï¿½o com a cor de fundo especificada */
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear (GL_DEPTH_BUFFER_BIT );
 
@@ -101,26 +149,36 @@ void Desenha(void)
     		  0.0, 5.0, 0.0,		/* look */
     		  0.0, 1.0, 0.0);		/* up */
 
-    /* Rotaciona os objetos para visualizar a 3 dimensão */
+    /* Rotaciona os objetos para visualizar a 3 dimensï¿½o */
 	glRotatef(rotationY, 1.0, 0.0, 0.0); /* Rotaciona em torno do X */
 	glRotatef(rotationX, 0.0, 1.0, 0.0); /* Rotaciona em torno de Y */
 
-    for(int i=0; i<nPoints;i++){
-        criarEsfera(eixoX[i],eixoY[i]);
-    }
-
-    contadorColor=0;
+    int num = 0;
     for(list< vector<Point> >::iterator list_iter = listSolution.begin(); list_iter != listSolution.end(); list_iter++){
-      vector<Point> solution = *list_iter;
+    	if(contador < 0 and contador > listSolution.size()){
 
-        for(int i=0; i<solution.size()-1;i++){
-                criarLinha(solution[i].x,solution[i].y,solution[i+1].x,solution[i+1].y,color[contadorColor]);
-                contadorColor++;
-        }
-        criarLinha(solution[solution.size()-1].x,solution[solution.size()-1].y,solution[0].x,solution[0].y,color[contadorColor]);
-        contadorColor++;
-    }
+    		break;
+    	}
 
+    	if(num <= contador){
+		   vector<Point> solution = *list_iter;
+
+			for(int i=0; i<solution.size() -1;i++){
+				criarEsfera(solution[i].x,solution[i].y, contadorColor);
+				criarEsfera(solution[i+1].x,solution[i+1].y, contadorColor);
+				criarLinha(solution[i].x,solution[i].y,solution[i+1].x,solution[i+1].y, contadorColor);
+			}
+			criarLinha(solution[solution.size()-1].x,solution[solution.size()-1].y,solution[0].x,solution[0].y, contadorColor);
+			contadorColor++;
+		}
+    	num++;
+	}
+
+    contadorColor = 0;
+
+    for(int i=0; i<nPoints;i++){
+		criarEsfera(eixoX[i],eixoY[i],1);
+	}
     Desenha_Eixos_Coordenados();
 	glFlush();
 
@@ -146,17 +204,32 @@ void Mouse_Press(int button, int state, int x, int y)
     glClear (GL_DEPTH_BUFFER_BIT );
 	if ( button == GLUT_LEFT_BUTTON && state == GLUT_DOWN )
 	{
-		/* Pega a posição atua do mouse */
+		/* Pega a posiï¿½ï¿½o atua do mouse */
 		last_press_x = x;
 		last_press_y = y;
 	}
 
 }
 
+void print_arrays(vector<Point>  pts, vector<Point>  diff){
+
+	printf("Points\n");
+
+	for(int i = 0; i < pts.size(); i++){
+		printf("[%f , %f] ",pts[i].x, pts[i].y);
+	}
+	printf("\n");
+
+	printf("Difference\n");
+	for(int i = 0; i < diff.size(); i++){
+		printf("[%f , %f] ",diff[i].x, diff[i].y);
+	}
+
+}
 
 void Inicializa (void)
 {
-    /* Define a cor de fundo da janela de visualização como branca */
+    /* Define a cor de fundo da janela de visualizaï¿½ï¿½o como branca */
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     /* Modo de projecao ortogonal (Default) */
@@ -166,18 +239,18 @@ void Inicializa (void)
     gluPerspective(40.0f, ((GLfloat)LARGURA/(GLfloat)ALTURA), 1, 100.0f);
 
 
-	/* Habilita o depth-buffering para remoção de faces escondidas */
+	/* Habilita o depth-buffering para remoï¿½ï¿½o de faces escondidas */
     glEnable(GL_DEPTH_TEST);
     glClear (GL_DEPTH_BUFFER_BIT );
 
 
-	/* Modelos de Iluminação Defaut */
+	/* Modelos de Iluminaï¿½ï¿½o Defaut */
 	glShadeModel(GL_SMOOTH); 		/* Gouraud */
 
 	glEnable(GL_BLEND);
 
     vector<Point> points(nPoints);
-    color = vector<int>(nPoints+100);
+//    color = vector<int>(nPoints+100);
     eixoX = vector<double>(nPoints);
     eixoY = vector<double>(nPoints);
 
@@ -201,30 +274,33 @@ void Inicializa (void)
 
 	}
 
-	for(int i = 0; i < nPoints; i++){
-        vector<Point> differences(nPoints);
-        vector<Point> solution = convex_hull(points, &differences);
-        listSolution.push_back(solution);
-        points = differences;
-	}
 
-    for(int i = 0; i < color.size(); i++){
-        color[i]=1;
-    }
+	convex_hull_1(points, &listSolution);
+	contatenated = concat_solutions(&listSolution);
 
 	printf("****************************\n");
+	Desenha();
 }
 
+void teste(){
+	printf("FunÃ§Ã£o teste\n");
+}
 void Teclado(unsigned char key, int x, int y)
 {
     switch (key) {
 
-        case 'Z':
         case 'z':
-        glClear (GL_DEPTH_BUFFER_BIT );
-        color[contador]=0;
-        contador++;
+			glClear (GL_DEPTH_BUFFER_BIT );
+			contador++;
+			event = 1;
+			Desenha();
         break;
+        case 'c':
+        	event = 2;
+        	Desenha_solucao_concatenada();
+        	printf("Apertou o c\n");
+
+		break;
 
 
     }
@@ -243,7 +319,10 @@ int main(int argc, char **argv)
 	cout<<"Digite o numero de vertices:"<<endl;
 	cin>> nPoints;
     Inicializa();
-	glutDisplayFunc(Desenha);
+//    if(event == 1)
+//    	glutDisplayFunc(Desenha);
+//    else
+//    	glutDisplayFunc(Desenha_solucao_concatenada);
 	glutMouseFunc(Mouse_Press);
 	glutMotionFunc(Mouse_Motion);
 	glutKeyboardFunc(Teclado);

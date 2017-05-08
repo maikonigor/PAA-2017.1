@@ -22,6 +22,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -48,5 +49,13 @@ coord2_t cross(const Point &O, const Point &A, const Point &B);
  * Retorna a lista de pontos do fecho convexo no sentido anti-horário
  */
 vector<Point> convex_hull(vector<Point> P, vector<Point> * differences);
+
+void convex_hull_1(vector<Point> P, list< vector<Point> > * listSolution );
+
+vector<Point> calculate_difference(const vector<Point> points, const vector<Point> solution);
+
+void print_solution(const vector<Point> points);
+
+vector<Point> concat_solutions(list< vector<Point> > * listSolution);
 
 #endif /* CONVEX_HULL_H_ */

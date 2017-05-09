@@ -55,6 +55,9 @@ vector<double> vet1;
 vector<double> vet2;
 char cam[1024];
 
+int ContadorSumArestas=0;
+
+
 void criarCubo(int x,int y, int val)
 {
 
@@ -167,6 +170,19 @@ void criarEsfera(double x,double y){
 
 }
 
+
+void criarContador(){
+
+glColor3f(0.0,0.0, 0.0);
+
+    char cBuffer[100] = {0};
+    snprintf(cBuffer, sizeof(cBuffer), "%d", ContadorSumArestas);
+    drawStrokeText(cBuffer[0],13,20,0,0.018,0.015);
+    drawStrokeText(cBuffer[1],15,20,0,0.018,0.015);
+    drawStrokeText(cBuffer[2],17,20,0,0.018,0.015);
+
+}
+
 void Desenha(void)
 {
 	/* Limpa a janela de visualização com a cor de fundo especificada */
@@ -182,6 +198,8 @@ void Desenha(void)
     /* Rotaciona os objetos para visualizar a 3 dimensão */
 	glRotatef(rotationY, 1.0, 0.0, 0.0); /* Rotaciona em torno do X */
 	glRotatef(rotationX, 0.0, 1.0, 0.0); /* Rotaciona em torno de Y */
+
+    criarContador();
 
     criarCubo(pos[0],10,value[0]-1);
     criarCubo(pos[1],10,value[1]-1);
@@ -232,6 +250,8 @@ void Desenha2(void)
 	glRotatef(rotationY, 1.0, 0.0, 0.0); /* Rotaciona em torno do X */
 	glRotatef(rotationX, 0.0, 1.0, 0.0); /* Rotaciona em torno de Y */
 
+    criarContador();
+
     for(int i=0; i<nPoints;i++){
         criarEsfera(eixoX[i],eixoY[i]);
     }
@@ -270,6 +290,8 @@ void Desenha3(void)
     /* Rotaciona os objetos para visualizar a 3 dimensão */
 	glRotatef(rotationY, 1.0, 0.0, 0.0); /* Rotaciona em torno do X */
 	glRotatef(rotationX, 0.0, 1.0, 0.0); /* Rotaciona em torno de Y */
+
+    criarContador();
 
     for(int i=0; i<nPoints;i++){
         criarEsfera(eixoX[i],eixoY[i]);
@@ -468,6 +490,7 @@ void Teclado(unsigned char key, int x, int y)
         glClear (GL_DEPTH_BUFFER_BIT );
         if(countColor<colorP.size()){
             if(colorP[countColor]!=-1){
+                ContadorSumArestas=ContadorSumArestas+valorAresta[colorP[countColor]];
                 color[colorP[countColor]]=1;
             }
             countColor++;
@@ -557,6 +580,7 @@ void Janela(int opcao)
 
 		case 0:
         countColor=0;
+        ContadorSumArestas=0;
         color = vector<int>(13);
         Inicializa1();
         glutDisplayFunc(Desenha);
@@ -566,6 +590,7 @@ void Janela(int opcao)
         cout<<"Digite o numero de vertices:"<<endl;
         cin>>nPoints;
         countColor=0;
+        ContadorSumArestas=0;
         Inicializa2();
         glutDisplayFunc(Desenha2);
         break;
@@ -578,6 +603,7 @@ void Janela(int opcao)
         cin>>caminho;
         strcpy(cam, caminho.c_str());
         countColor=0;
+        ContadorSumArestas=0;
         Inicializa3();
         glutDisplayFunc(Desenha3);
         break;

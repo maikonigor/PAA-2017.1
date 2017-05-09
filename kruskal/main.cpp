@@ -2,7 +2,7 @@
  * perspectivas e ortonais no OpenGL.
  * É mostrado como especificar uma câmera
  * e desenhar primitivas 3D do opengl */
-#include <windows.h>
+//#include <windows.h>
 #include <GL/glut.h>
 #include <iostream>
 #include <stdio.h>
@@ -123,7 +123,8 @@ void criarLinha(int x,int y, int z,int w, int color,int value){
     glColor3f(0.0,color, 0.0);
 
     char cBuffer[5] = {0};
-    itoa(value,cBuffer, 10);
+    //itoa(value,cBuffer, 10);
+   snprintf(cBuffer, sizeof(cBuffer), "%d", value);
 
     drawStrokeText(cBuffer[0],((x +y)/2)-2,((z+w)/2)+1,0,0.018,0.015);
     glLineWidth(5);
@@ -140,8 +141,8 @@ void criarLinha(int x,int z,int y, int w,int color, int value, float scala1, flo
     glColor3f(0.0,color, 0.0);
 
     char cBuffer[5] = {0};
-    itoa(value,cBuffer, 10);
-
+    //itoa(value,cBuffer, 10);
+    snprintf(cBuffer, sizeof(cBuffer), "%d", value);
     drawStrokeText(cBuffer[0],((x +y)/2),((z+w)/2),0,scala1,scala2);
     glLineWidth(1);
     glScalef(ex, ey, 1.0f);

@@ -11,4 +11,4 @@ Implementation of Andrew's algorithm to find the convex hull with complexity O(n
 ## Kruskal Algorithm
 Implementation of Kruskal's algorithm to compute the minimum sppaning tree of a givem graph.
 
-**We use OpenGl to plot the results of the Algorithms, make sure you have all the necessary libraries installed in yor machine**
+**We use OpenGl to plot the results of the Algorithms, make sure you have all the necessary libraries installed in your machine**

@@ -89,7 +89,7 @@ public:
 	}
 
 	/// função que roda o algoritmo de Kruskal
-	void kruskal(int colorP[])
+	vector<int> kruskal(vector<int> colorP)
 	{
 		vector<Aresta> arvore;
 		int size_arestas = arestas.size();
@@ -127,8 +127,9 @@ public:
 
             colorP[i]=cod;
 
-			cout << "(" << v1 << ", " << v2 << ", "<< cod <<") = " << arvore[i].obterPeso() << endl;
-
+			cout << arvore[i].obterPeso() << endl;
 		}
+
+		return colorP;
 	}
 };

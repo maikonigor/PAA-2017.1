@@ -258,16 +258,16 @@
 	<_mingw.h>
 	<stddef.h>
 
-1493906214 source:c:\users\raphael\workspace codeblocks\paa-2017.1\convex-hull\convex-hull.cpp
+1494294074 source:c:\users\raphael\workspace codeblocks\paa-2017.1\convex-hull\convex-hull.cpp
 	"convex-hull.h"
 	<stdio.h>
 
-1494037580 c:\users\raphael\workspace codeblocks\paa-2017.1\convex-hull\convex-hull.h
+1494294074 c:\users\raphael\workspace codeblocks\paa-2017.1\convex-hull\convex-hull.h
 	<algorithm>
 	<vector>
+	<list>
 
-1494068448 source:c:\users\raphael\workspace codeblocks\paa-2017.1\convex-hull\main.cpp
-	<windows.h>
+1494294074 source:c:\users\raphael\workspace codeblocks\paa-2017.1\convex-hull\main.cpp
 	<GL/glut.h>
 	<iostream>
 	<stdio.h>

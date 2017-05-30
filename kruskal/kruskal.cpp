@@ -22,7 +22,6 @@ public:
 		vertice1 = v1;
 		vertice2 = v2;
 		this->cod = cod;
-
 		this->peso = peso;
 	}
 

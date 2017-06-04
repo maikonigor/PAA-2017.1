@@ -2,19 +2,19 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2017-05-30T12:46:43</date>
-  <millis>1496159203652</millis>
+  <date>2017-06-03T20:50:57</date>
+  <millis>1496533857315</millis>
   <sequence>0</sequence>
   <logger>jMetal</logger>
   <level>INFO</level>
   <class>jmetal.metaheuristics.singleObjective.particleSwarmOptimization.PSO_main</class>
   <method>main</method>
   <thread>1</thread>
-  <message>Total execution time: 1371ms</message>
+  <message>Total execution time: 587ms</message>
 </record>
 <record>
-  <date>2017-05-30T12:46:43</date>
-  <millis>1496159203714</millis>
+  <date>2017-06-03T20:50:57</date>
+  <millis>1496533857339</millis>
   <sequence>1</sequence>
   <logger>jMetal</logger>
   <level>INFO</level>
@@ -24,8 +24,8 @@
   <message>Objectives values have been writen to file FUN</message>
 </record>
 <record>
-  <date>2017-05-30T12:46:43</date>
-  <millis>1496159203725</millis>
+  <date>2017-06-03T20:50:57</date>
+  <millis>1496533857345</millis>
   <sequence>2</sequence>
   <logger>jMetal</logger>
   <level>INFO</level>

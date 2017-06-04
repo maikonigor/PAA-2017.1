@@ -26,7 +26,7 @@ import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
-import jmetal.util.wrapper.XReal;
+import jmetal.util.wrapper.XInt;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -214,13 +214,13 @@ public class PSO extends Algorithm {
     //double W ;
     double C1, C2;
     double wmax, wmin, deltaMax, deltaMin;
-    XReal bestGlobal;
+    XInt bestGlobal;
 
-  	bestGlobal = new XReal(globalBest_) ;
+  	bestGlobal = new XInt(globalBest_) ;
 
     for (int i = 0; i < particlesSize_; i++) {
-    	XReal particle = new XReal(particles_.get(i)) ;
-    	XReal bestParticle = new XReal(localBest_[i]) ;
+    	XInt particle = new XInt(particles_.get(i)) ;
+    	XInt bestParticle = new XInt(localBest_[i]) ;
 
       //int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
 
@@ -263,7 +263,7 @@ public class PSO extends Algorithm {
       C1 = 1.5 ;
       C2 = 1.5 ;
       double W = 0.9 ;
-      for (int var = 0; var < particle.size(); var++) {
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
         //Computing the velocity of this particle 
         speed_[i][var] = inertiaWeight(iter, miter, wmax, wmin) * speed_[i][var] +
           C1 * r1 * (bestParticle.getValue(var) - particle.getValue(var)) +
@@ -279,17 +279,17 @@ public class PSO extends Algorithm {
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < particlesSize_; i++) {
     	//Variable[] particle = particles_.get(i).getDecisionVariables();
-    	XReal particle = new XReal(particles_.get(i)) ;
+    	XInt particle = new XInt(particles_.get(i)) ;
       //particle.move(speed_[i]);
-      for (int var = 0; var < particle.size(); var++) {
-      	particle.setValue(var, particle.getValue(var) +  speed_[i][var]) ;
+      for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
+      	particle.setValue(var, (int) (particle.getValue(var) +  speed_[i][var])) ;
       	
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
-          particle.setValue(var, problem_.getLowerLimit(var));
+          particle.setValue(var, (int) problem_.getLowerLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel1_; //    
         }
         if (particle.getValue(var) > problem_.getUpperLimit(var)) {
-          particle.setValue(var, problem_.getUpperLimit(var));
+          particle.setValue(var, (int) problem_.getUpperLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel2_; //   
         }
         

@@ -280,7 +280,7 @@ public class PSO extends Algorithm {
     for (int i = 0; i < particlesSize_; i++) {
     	//Variable[] particle = particles_.get(i).getDecisionVariables();
     	XInt particle = new XInt(particles_.get(i)) ;
-      //particle.move(speed_[i]);
+      // particle.move(speed_[i]);
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
       	particle.setValue(var, (int) (particle.getValue(var) +  speed_[i][var])) ;
       	

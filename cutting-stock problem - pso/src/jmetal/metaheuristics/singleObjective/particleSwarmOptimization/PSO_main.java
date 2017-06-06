@@ -76,7 +76,7 @@ public class PSO_main {
 
     //problem = new Sphere("Real", 20); 
     
-    problem = new CuttingStockProblem("cut1.txt");
+    problem = new CuttingStockProblem("instance1.txt");
 
     algorithm = new PSO(problem) ;
     

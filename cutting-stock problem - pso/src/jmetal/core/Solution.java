@@ -150,7 +150,8 @@ public class Solution implements Serializable {
     //<-
 
     //variable_ = problem.solutionType_.createVariables() ; 
-    variable_ = type_.createVariables() ; 
+    variable_ = type_.createVariables() ;
+    int l = variable_.length;
   } // Solution
   
   static public Solution getNewSolution(Problem problem) throws ClassNotFoundException {

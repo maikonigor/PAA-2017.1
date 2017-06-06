@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
+import jmetal.encodings.solutionType.CuttingStockSolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.util.JMException;
@@ -18,13 +19,13 @@ public class CuttingStockProblem extends Problem{
 	
 	int numberBin;
 	int[] placa;
-	int[][] dimensions;
+	int[][] pecas;
 	int [] quant;
 	
 	
 	public CuttingStockProblem(String filename) {
 		
-		readConfig("src/instances/"+filename);
+		this.readConfig("src/instances/"+filename);
 		
 	    numberOfVariables_   = numberBin ;
 	    numberOfObjectives_  = 1;
@@ -39,7 +40,8 @@ public class CuttingStockProblem extends Problem{
 	    } // for
 	        
 	    try{
-			solutionType_ = new IntSolutionType(this);
+			//solutionType_ = new IntSolutionType(this);
+	    	solutionType_ = new CuttingStockSolutionType(this);
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -67,24 +69,49 @@ public class CuttingStockProblem extends Problem{
 			placa[1]= Integer.parseInt(tokens.nextToken().trim());
 			numberBin = Integer.parseInt(tokens.nextToken().trim());
 			
-			dimensions = new int[numberBin][2];
+			pecas = new int[numberBin][2];
 			quant = new int[numberBin]; 
 			
 			for (int i = 0; i < numberBin; i++) {
 				caracter=scn.nextLine();
 				tokens = new StringTokenizer(caracter);
-				dimensions[i][0] = Integer.parseInt(tokens.nextToken().trim());
-				dimensions[i][1] = Integer.parseInt(tokens.nextToken().trim());
+				pecas[i][0] = Integer.parseInt(tokens.nextToken().trim());
+				pecas[i][1] = Integer.parseInt(tokens.nextToken().trim());
 				quant[i] = Integer.parseInt(tokens.nextToken().trim());
 			}
 			
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Arquivo "+ filename + " Não encontrado");
 		}
 		
 		
 	}
+
+	public int[] getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(int[] placa) {
+		this.placa = placa;
+	}
+
+	public int[][] getPecas() {
+		return this.pecas;
+	}
+
+	public void setPecas(int[][] pecas) {
+		this.pecas = pecas;
+	}
+
+	public int[] getQuant() {
+		return quant;
+	}
+
+	public void setQuant(int[] quant) {
+		this.quant = quant;
+	}
+	
+	
 
 }

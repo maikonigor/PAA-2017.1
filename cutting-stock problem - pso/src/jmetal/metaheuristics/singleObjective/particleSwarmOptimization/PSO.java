@@ -26,7 +26,7 @@ import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 import jmetal.util.comparators.ObjectiveComparator;
-import jmetal.util.wrapper.XInt;
+import jmetal.util.wrapper.XCutStock;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -214,14 +214,16 @@ public class PSO extends Algorithm {
     //double W ;
     double C1, C2;
     double wmax, wmin, deltaMax, deltaMin;
-    XInt bestGlobal;
+    XCutStock bestGlobal;
 
-  	bestGlobal = new XInt(globalBest_) ;
+  	bestGlobal = new XCutStock(globalBest_) ;
 
     for (int i = 0; i < particlesSize_; i++) {
-    	XInt particle = new XInt(particles_.get(i)) ;
-    	XInt bestParticle = new XInt(localBest_[i]) ;
+//    	XInt particle = new XInt(particles_.get(i)) ;
+//    	XInt bestParticle = new XInt(localBest_[i]) ;
 
+    	XCutStock particle = new XCutStock(particles_.get(i)) ;
+    	XCutStock bestParticle = new XCutStock(localBest_[i]) ;
       //int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
 
       C1Max_ = 2.5;
@@ -279,7 +281,8 @@ public class PSO extends Algorithm {
   private void computeNewPositions() throws JMException {
     for (int i = 0; i < particlesSize_; i++) {
     	//Variable[] particle = particles_.get(i).getDecisionVariables();
-    	XInt particle = new XInt(particles_.get(i)) ;
+//    	XCutStock particle = new XCutStock(particles_.get(i)) ;
+    	XCutStock particle = new XCutStock(particles_.get(i)) ;
       // particle.move(speed_[i]);
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
       	particle.setValue(var, (int) (particle.getValue(var) +  speed_[i][var])) ;

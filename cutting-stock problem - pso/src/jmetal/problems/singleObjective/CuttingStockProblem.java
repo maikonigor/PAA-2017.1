@@ -14,6 +14,7 @@ import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.CuttingStockSolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
 import jmetal.encodings.solutionType.RealSolutionType;
+import jmetal.encodings.variable.ArrayInt;
 import jmetal.util.JMException;
 
 public class CuttingStockProblem extends Problem{
@@ -57,8 +58,10 @@ public class CuttingStockProblem extends Problem{
 		double areaOcupada = 0.0;
 		double areaPlaca = placa[0] * placa[1];
 		for (int var = 0; var < numberOfVariables_; var++) {
-			int qtd = (int) decisionVariables[var].getValue();
-			double area = (pecas[var][0] * pecas[var][1]) * qtd;
+			ArrayInt array = (ArrayInt)decisionVariables[var];
+			int peca = array.getValue(0);
+			int qtd = array.getValue(1);
+			double area = (pecas[peca][0] * pecas[peca][1]) * qtd;
 			areaOcupada += area;
 		}
 		

@@ -5,8 +5,10 @@ import java.util.Random;
 import jmetal.core.Problem;
 import jmetal.core.SolutionType;
 import jmetal.core.Variable;
+import jmetal.encodings.variable.ArrayInt;
 import jmetal.encodings.variable.Int;
 import jmetal.problems.singleObjective.CuttingStockProblem;
+import jmetal.util.JMException;
 
 /**
  * Class representing the solution type of solutions composed of peaces of cutting Stock problem 
@@ -31,8 +33,8 @@ public class CuttingStockSolutionType extends IntSolutionType {
 		Variable[] variables = new Variable[problem_.getNumberOfVariables()];
 		Random random = new Random();
 		int index = random.nextInt((problem_.getNumberOfVariables()-1) - 0 + 1);
+		int contador = 0;
 		
-		index = 0;
 		CuttingStockProblem problem = (CuttingStockProblem) this.problem_;
 		int[][] pecas = problem.getPecas();
 		int[] quantidades = problem.getQuant();
@@ -71,8 +73,23 @@ public class CuttingStockSolutionType extends IntSolutionType {
 				}
 			
 			}
-			variables[index] = new Int(quantidadeAtual, 0, quantidadePeca);
+			
+			double lowerBounds[] = {0.0,0.0};
+			double upperBounds[] = {quantidades.length,quantidadePeca};
+			
+			ArrayInt array = new ArrayInt(2,lowerBounds,upperBounds);
+			try {
+				array.setValue(0, index);
+				array.setValue(1, quantidadeAtual);
+			} catch (JMException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			variables[contador] =  array;
+			
+//					Int(quantidadeAtual, 0, quantidadePeca);
 			index++;
+			contador++;
 			if(index == problem_.getNumberOfVariables()){
 				index = 0;
 			}

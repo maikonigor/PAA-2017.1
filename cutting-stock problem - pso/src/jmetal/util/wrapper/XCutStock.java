@@ -3,10 +3,11 @@ package jmetal.util.wrapper;
 import jmetal.core.Solution;
 import jmetal.core.SolutionType;
 import jmetal.encodings.solutionType.CuttingStockSolutionType;
+import jmetal.encodings.variable.ArrayInt;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
-public class XCutStock {
+public class XCutStock extends ArrayInt{
 
 	private Solution solution_ ;
 	private SolutionType type_ ;
@@ -35,7 +36,7 @@ public class XCutStock {
 	 */
 	public int getValue(int index) throws JMException {
 		if (type_.getClass() == CuttingStockSolutionType.class){
-			return (int)solution_.getDecisionVariables()[index].getValue() ;			
+			return (int)solution_.getDecisionVariables()[index].getValue() ;	
 		}else {
 			Configuration.logger_.severe("jmetal.util.wrapper.CuttingStock.getValue, solution type " +
 					type_ + "+ invalid") ;		
@@ -63,7 +64,7 @@ public class XCutStock {
 	 * @return The lower bound of the encodings.variable
 	 * @throws JMException
 	 */
-	public int getLowerBound(int index) throws JMException {
+	public double getLowerBound(int index) throws JMException {
 		if (type_.getClass() == CuttingStockSolutionType.class)
 			return (int)solution_.getDecisionVariables()[index].getLowerBound() ;
 		else {
@@ -79,7 +80,7 @@ public class XCutStock {
 	 * @return The upper bound of the encodings.variable
 	 * @throws JMException
 	 */
-	public int getUpperBound(int index) throws JMException {
+	public double getUpperBound(int index) throws JMException {
 		if (type_.getClass() == CuttingStockSolutionType.class)		
 			return (int)solution_.getDecisionVariables()[index].getUpperBound() ;
 		else

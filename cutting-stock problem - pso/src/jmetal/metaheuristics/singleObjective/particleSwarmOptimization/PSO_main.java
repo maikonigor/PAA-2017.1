@@ -77,12 +77,11 @@ public class PSO_main {
     //problem = new Sphere("Real", 20); 
     
     problem = new CuttingStockProblem("instance1.txt");
-
     algorithm = new PSO(problem) ;
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",50);
-    algorithm.setInputParameter("maxIterations",5000);
+    algorithm.setInputParameter("maxIterations",1000000);
     
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
@@ -95,6 +94,7 @@ public class PSO_main {
     long initTime = System.currentTimeMillis();
     SolutionSet population = algorithm.execute();
     long estimatedTime = System.currentTimeMillis() - initTime;
+    
     
     // Result messages 
     logger_.info("Total execution time: "+estimatedTime + "ms");

@@ -31,6 +31,8 @@ public class CuttingStockSolutionType extends IntSolutionType {
 		Variable[] variables = new Variable[problem_.getNumberOfVariables()];
 		Random random = new Random();
 		int index = random.nextInt((problem_.getNumberOfVariables()-1) - 0 + 1);
+		
+		index = 0;
 		CuttingStockProblem problem = (CuttingStockProblem) this.problem_;
 		int[][] pecas = problem.getPecas();
 		int[] quantidades = problem.getQuant();
@@ -38,18 +40,17 @@ public class CuttingStockSolutionType extends IntSolutionType {
 		
 		int maiorAltura = 0;
 		int maiorLargura = 0;
-		int larguraPlaca = placa[0];
-		int alturaPlaca = placa[1];
+		int larguraPlaca = placa[1];
+		int alturaPlaca = placa[0];
 		int maiorPeca = 0;
 		for (int var = 0; var < problem_.getNumberOfVariables(); var++){
 			
 			int larguraPeca = pecas[index][0];
-			int alturaPeca = pecas[index][0];
+			int alturaPeca = pecas[index][1];
 			int quantidadePeca = quantidades[index];
 			int quantidadeAtual = 0;
 			
 			for(int i = 0; i < quantidadePeca; i++){
-				
 				boolean coube = false;
 				while(!coube){
 					if((alturaPlaca - maiorAltura) > alturaPeca ){ // Se peca couber na altura, verficar se cabe na largura

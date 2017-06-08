@@ -391,6 +391,8 @@ public class PSO extends Algorithm {
       iteration_++;
     }
     
+    System.out.println("Iterations: " + iteration_);
+    System.out.println("Objective: " + globalBest_.getObjective(0));
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1) ;
     resultPopulation.add(particles_.get((Integer)findBestSolution_.execute(particles_))) ;

@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
 
 import jmetal.core.Problem;
 import jmetal.core.Solution;
+import jmetal.core.Variable;
 import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.CuttingStockSolutionType;
 import jmetal.encodings.solutionType.IntSolutionType;
@@ -51,7 +52,25 @@ public class CuttingStockProblem extends Problem{
 
 	@Override
 	public void evaluate(Solution solution) throws JMException {
+		double value = 0.0;
+		Variable[] decisionVariables  = solution.getDecisionVariables();
+		double areaOcupada = 0.0;
+		double areaPlaca = placa[0] * placa[1];
+		for (int var = 0; var < numberOfVariables_; var++) {
+			int qtd = (int) decisionVariables[var].getValue();
+			double area = (pecas[var][0] * pecas[var][1]) * qtd;
+			areaOcupada += area;
+		}
 		
+		double sobra = areaPlaca - areaOcupada;
+		if(areaOcupada > areaPlaca){
+			value = 5 * (sobra/areaPlaca);
+		}else{
+			value = sobra/areaPlaca;
+		}
+		
+		
+		solution.setObjective(0, value);
 		
 	}
 	
@@ -59,7 +78,7 @@ public class CuttingStockProblem extends Problem{
 
 		try {
 			Scanner scn = new Scanner(new File(filename));
-			
+			System.out.println(filename);
 			String caracter=scn.nextLine();
 			StringTokenizer tokens = new StringTokenizer(caracter);
 			

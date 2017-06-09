@@ -67,7 +67,7 @@ public class CuttingStockProblem extends Problem{
 		
 		double sobra = areaPlaca - areaOcupada;
 		if(areaOcupada > areaPlaca){
-			value = 5 * (sobra/areaPlaca);
+			value = 5 ;
 		}else{
 			value = sobra/areaPlaca;
 		}

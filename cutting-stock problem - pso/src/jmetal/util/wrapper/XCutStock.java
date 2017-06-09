@@ -9,6 +9,10 @@ import jmetal.util.JMException;
 
 public class XCutStock extends ArrayInt{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Solution solution_ ;
 	private SolutionType type_ ;
 
@@ -36,7 +40,8 @@ public class XCutStock extends ArrayInt{
 	 */
 	public int getValue(int index) throws JMException {
 		if (type_.getClass() == CuttingStockSolutionType.class){
-			return (int)solution_.getDecisionVariables()[index].getValue() ;	
+			ArrayInt array = (ArrayInt) solution_.getDecisionVariables()[index];
+			return array.getValue(1); // retorna a quantidade de uma determinada peca	
 		}else {
 			Configuration.logger_.severe("jmetal.util.wrapper.CuttingStock.getValue, solution type " +
 					type_ + "+ invalid") ;		
@@ -51,8 +56,11 @@ public class XCutStock extends ArrayInt{
 	 * @throws JMException
 	 */
 	public void setValue(int index, int value) throws JMException {
-		if (type_.getClass() == CuttingStockSolutionType.class)
-			solution_.getDecisionVariables()[index].setValue(value) ;
+		if (type_.getClass() == CuttingStockSolutionType.class){
+			ArrayInt array = (ArrayInt) solution_.getDecisionVariables()[index];
+			array.setValue(1, value);
+//			solution_.getDecisionVariables()[index].setValue(value) ;
+		}
 		else
 			Configuration.logger_.severe("jmetal.util.wrapper.CuttingStock.setValue, solution type " +
 					type_ + "+ invalid") ;		

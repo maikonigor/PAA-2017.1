@@ -2,23 +2,22 @@ package jmetal.problems.singleObjective;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.Variable;
-import jmetal.encodings.solutionType.BinaryRealSolutionType;
 import jmetal.encodings.solutionType.CuttingStockSolutionType;
-import jmetal.encodings.solutionType.IntSolutionType;
-import jmetal.encodings.solutionType.RealSolutionType;
 import jmetal.encodings.variable.ArrayInt;
 import jmetal.util.JMException;
 
 public class CuttingStockProblem extends Problem{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int numberBin;
 	int[] placa;
 	int[][] pecas;
@@ -54,6 +53,20 @@ public class CuttingStockProblem extends Problem{
 	@Override
 	public void evaluate(Solution solution) throws JMException {
 		double value = 0.0;
+		
+		boolean cabeNaPlaca = isCabenaPlaca(solution);
+		
+		if(cabeNaPlaca){
+			value = calculaSobra(solution);
+		}else{
+			value = 5;
+		}
+		
+		solution.setObjective(0, value);
+		
+	}
+	
+	public double calculaSobra(Solution solution) throws JMException{
 		Variable[] decisionVariables  = solution.getDecisionVariables();
 		double areaOcupada = 0.0;
 		double areaPlaca = placa[0] * placa[1];
@@ -66,15 +79,53 @@ public class CuttingStockProblem extends Problem{
 		}
 		
 		double sobra = areaPlaca - areaOcupada;
-		if(areaOcupada > areaPlaca){
-			value = 5 ;
-		}else{
-			value = sobra/areaPlaca;
+		
+		return sobra/areaPlaca;
+	}
+	
+	public boolean isCabenaPlaca(Solution solution){
+		Variable[] decisionVariables  = solution.getDecisionVariables();
+		int larguraPlaca = placa[0];
+		int alturaPlaca = placa[1];
+		try {
+			for (int var = 0; var < numberOfVariables_; var++){
+				ArrayInt array = (ArrayInt)decisionVariables[var];
+				int peca = array.getValue(0);
+				int qtd = array.getValue(1);
+				
+				int alturaPeca = pecas[peca][1];
+				int larguraPeca = pecas[peca][0];
+				boolean coube = true;
+				int maiorAltura = 0;
+				int maiorLargura = 0;
+				int maiorPeca = 0;
+				
+				while(coube){
+					if((alturaPlaca - maiorAltura) > alturaPeca ){ // Se peca couber na altura, verficar se cabe na largura
+						if((maiorLargura + larguraPeca) < larguraPlaca){
+							maiorLargura = maiorLargura + larguraPeca; //Se couber na largura alocar placa
+							coube = true;
+							if(alturaPeca > maiorPeca) //Verifica se a peca atual é a mais alta
+								maiorPeca = alturaPeca;
+						}else{ // Se não couber na largura tenta alocar um nivel acima
+							maiorAltura = maiorAltura + maiorPeca;
+							maiorPeca = maiorLargura =  0;
+							continue;
+							
+						}
+					}else{
+						coube = false; //não coube na largura
+						return coube;
+					}
+				}
+				
+			}
+			
+		} catch (JMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-		solution.setObjective(0, value);
-		
+		return true;
 	}
 	
 	public void readConfig(String filename) {

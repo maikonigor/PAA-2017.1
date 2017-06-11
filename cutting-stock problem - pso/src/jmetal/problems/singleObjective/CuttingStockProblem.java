@@ -87,6 +87,9 @@ public class CuttingStockProblem extends Problem{
 		Variable[] decisionVariables  = solution.getDecisionVariables();
 		int larguraPlaca = placa[0];
 		int alturaPlaca = placa[1];
+		int maiorAltura = 0;
+		int maiorPeca = 0;
+		int maiorLargura = 0;
 		try {
 			for (int var = 0; var < numberOfVariables_; var++){
 				ArrayInt array = (ArrayInt)decisionVariables[var];
@@ -96,27 +99,27 @@ public class CuttingStockProblem extends Problem{
 				int alturaPeca = pecas[peca][1];
 				int larguraPeca = pecas[peca][0];
 				boolean coube = true;
-				int maiorAltura = 0;
-				int maiorLargura = 0;
-				int maiorPeca = 0;
-				
-				while(coube){
-					if((alturaPlaca - maiorAltura) > alturaPeca ){ // Se peca couber na altura, verficar se cabe na largura
-						if((maiorLargura + larguraPeca) < larguraPlaca){
-							maiorLargura = maiorLargura + larguraPeca; //Se couber na largura alocar placa
-							coube = true;
-							if(alturaPeca > maiorPeca) //Verifica se a peca atual é a mais alta
-								maiorPeca = alturaPeca;
-						}else{ // Se não couber na largura tenta alocar um nivel acima
-							maiorAltura = maiorAltura + maiorPeca;
-							maiorPeca = maiorLargura =  0;
-							continue;
-							
+				for(int i = 0; i<qtd; i++){
+					while(coube){
+						if((alturaPlaca - maiorAltura) > alturaPeca ){ // Se peca couber na altura, verficar se cabe na largura
+							if((maiorLargura + larguraPeca) < larguraPlaca){
+								maiorLargura = maiorLargura + larguraPeca; //Se couber na largura alocar placa
+								coube = true;
+								if(alturaPeca > maiorPeca) //Verifica se a peca atual é a mais alta
+									maiorPeca = alturaPeca;
+								break;
+							}else{ // Se não couber na largura tenta alocar um nivel acima
+								maiorAltura = maiorAltura + maiorPeca;
+								maiorPeca = maiorLargura =  0;
+								continue;
+								
+							}
+						}else{
+							coube = false; //não coube na largura
+							return coube;
 						}
-					}else{
-						coube = false; //não coube na largura
-						return coube;
 					}
+					
 				}
 				
 			}

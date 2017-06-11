@@ -299,6 +299,7 @@ public class PSO extends Algorithm {
       }
     }
   } // computeNewPositions
+  
 
   /**
    * Apply a mutation operator to some particles in the swarm
@@ -397,6 +398,7 @@ public class PSO extends Algorithm {
     SolutionSet resultPopulation = new SolutionSet(1) ;
     resultPopulation.add(particles_.get((Integer)findBestSolution_.execute(particles_))) ;
     
+    problem_.evaluate(particles_.get((Integer)findBestSolution_.execute(particles_)));
     return resultPopulation ;
   } // execute
 } // PSO

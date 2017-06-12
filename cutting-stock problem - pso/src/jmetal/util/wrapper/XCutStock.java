@@ -48,6 +48,34 @@ public class XCutStock extends ArrayInt{
 		}
 		return 0;
 	} // Get value
+	
+	/**
+	 * swippe positions of variable depending on velocity
+	 * @param index index of the encondings.variable
+	 * @param newPosition index of the position to change
+	 */
+	public void changePosition(int index, int newPosition){
+		newPosition = Math.abs(newPosition);
+		
+		if(newPosition > (solution_.getDecisionVariables().length -1)){
+			newPosition = (solution_.getDecisionVariables().length -1);
+		}
+		
+		ArrayInt array = (ArrayInt) solution_.getDecisionVariables()[index];
+		ArrayInt array2 = (ArrayInt) solution_.getDecisionVariables()[newPosition];
+		ArrayInt aux = (ArrayInt) array.deepCopy();
+		
+		try {
+			setValue(index, 0, array2.getValue(0));
+			setValue(index, 1, array2.getValue(1));
+			setValue(newPosition, 0, aux.getValue(0));
+			setValue(newPosition, 1, aux.getValue(1));
+		} catch (JMException e) {
+			e.printStackTrace();
+		}
+		
+			
+	}
 
 	/**
 	 * Sets the value of a encodings.variable
@@ -64,7 +92,18 @@ public class XCutStock extends ArrayInt{
 		else
 			Configuration.logger_.severe("jmetal.util.wrapper.CuttingStock.setValue, solution type " +
 					type_ + "+ invalid") ;		
-	} // setValue	
+	} // setValue
+	
+	public void setValue(int indexVariable, int indexPosition, int value) throws JMException{
+		if (type_.getClass() == CuttingStockSolutionType.class){
+			ArrayInt array = (ArrayInt) solution_.getDecisionVariables()[indexVariable];
+			array.setValue(indexPosition, value);
+//			solution_.getDecisionVariables()[index].setValue(value) ;
+		}
+		else
+			Configuration.logger_.severe("jmetal.util.wrapper.CuttingStock.setValue, solution type " +
+					type_ + "+ invalid") ;	
+	}
 
 	/**
 	 * Gets the lower bound of a encodings.variable

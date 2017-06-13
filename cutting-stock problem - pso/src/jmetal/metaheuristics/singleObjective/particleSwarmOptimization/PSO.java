@@ -285,8 +285,8 @@ public class PSO extends Algorithm {
     	XCutStock particle = new XCutStock(particles_.get(i)) ;
       // particle.move(speed_[i]);
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-      	particle.setValue(var, (int) (particle.getValue(var) +  speed_[i][var])) ;
-      	
+      	particle.setValue(var, (int) (particle.getValue(var) +  speed_[i][var]));
+      	particle.changePosition(var, (int)speed_[i][var]); //Apos trocar a quantidade de elementos, troca de posicao
         if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, (int) problem_.getLowerLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel1_; //    
@@ -299,6 +299,7 @@ public class PSO extends Algorithm {
       }
     }
   } // computeNewPositions
+  
   
 
   /**
@@ -393,7 +394,8 @@ public class PSO extends Algorithm {
     }
     
     System.out.println("Iterations: " + iteration_);
-    System.out.println("Objective: " + globalBest_.getObjective(0));
+    System.out.println("Global Best Objective: " + globalBest_.getObjective(0));
+    System.out.println("Configuracao global Best: "+globalBest_.getDecisionVariables());
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1) ;
     resultPopulation.add(particles_.get((Integer)findBestSolution_.execute(particles_))) ;

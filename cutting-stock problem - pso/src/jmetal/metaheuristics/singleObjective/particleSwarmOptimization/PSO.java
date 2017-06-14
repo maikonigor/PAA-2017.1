@@ -395,12 +395,14 @@ public class PSO extends Algorithm {
     
     System.out.println("Iterations: " + iteration_);
     System.out.println("Global Best Objective: " + globalBest_.getObjective(0));
-    System.out.println("Configuracao global Best: "+globalBest_.getDecisionVariables());
+    
     // Return a population with the best individual
     SolutionSet resultPopulation = new SolutionSet(1) ;
-    resultPopulation.add(particles_.get((Integer)findBestSolution_.execute(particles_))) ;
+//    resultPopulation.add(particles_.get((Integer)findBestSolution_.execute(particles_))) ;
     
-    problem_.evaluate(particles_.get((Integer)findBestSolution_.execute(particles_)));
+    resultPopulation.add(globalBest_);
+    problem_.evaluate(globalBest_);
+//    problem_.evaluate(particles_.get((Integer)findBestSolution_.execute(particles_)));
     return resultPopulation ;
   } // execute
 } // PSO

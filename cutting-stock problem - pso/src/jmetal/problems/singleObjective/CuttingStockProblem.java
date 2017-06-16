@@ -2,6 +2,7 @@ package jmetal.problems.singleObjective;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -149,7 +150,7 @@ public class CuttingStockProblem extends Problem {
 		}
 		return true;
 	}
-
+	
 	public void reparo(Solution solution) throws JMException {
 
 		Variable[] decisionVariables = solution.getDecisionVariables();
@@ -167,6 +168,41 @@ public class CuttingStockProblem extends Problem {
 
 		solution.setDecisionVariables(decisionVariables);
 		
+	}
+
+	public void reparo2(Solution solution) throws JMException {
+
+		Variable[] decisionVariables = solution.getDecisionVariables();
+		Random r = new Random();
+
+		while (!isCabenaPlaca(solution)) {
+
+			ArrayList<Object> posicao = posicaoValida(decisionVariables);
+
+			int var = r.nextInt(posicao.size());
+			ArrayInt array = (ArrayInt) decisionVariables[(int) posicao.get(var)];
+			int qtd = array.getValue(1);
+			array.setValue(1, qtd - 1);
+			decisionVariables[var] = array;
+		}
+
+		solution.setDecisionVariables(decisionVariables);
+
+	}
+
+	public ArrayList<Object> posicaoValida(Variable[] decisionVariables) throws JMException {
+
+		ArrayList<Object> posicaoValida = new ArrayList<>();
+
+		for (int i = 0; i < decisionVariables.length; i++) {
+			ArrayInt test = (ArrayInt) decisionVariables[i];
+			if (test.getValue(1) > 0) {
+				posicaoValida.add(i);
+			}
+		}
+
+		return posicaoValida;
+
 	}
 
 	public void readConfig(String filename) {

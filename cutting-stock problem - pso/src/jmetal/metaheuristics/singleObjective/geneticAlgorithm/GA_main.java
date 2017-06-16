@@ -28,6 +28,7 @@ import jmetal.core.SolutionSet;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
+import jmetal.problems.singleObjective.CuttingStockProblem;
 import jmetal.problems.singleObjective.OneMax;
 import jmetal.util.JMException;
 
@@ -51,12 +52,14 @@ public class GA_main {
     //int bits ; // Length of bit string in the OneMax problem
     HashMap  parameters ; // Operator parameters
 
-    int bits = 512 ;
-    problem = new OneMax("Binary", bits);
+    //int bits = 512 ;
+    //problem = new OneMax("Binary", bits);
  
     //problem = new Sphere("Real", 10) ;
     //problem = new Easom("Real") ;
     //problem = new Griewank("Real", 10) ;
+    
+    problem = new CuttingStockProblem("instance1.txt");
     
     algorithm = new gGA(problem) ; // Generational GA
     //algorithm = new ssGA(problem); // Steady-state GA
@@ -85,7 +88,7 @@ public class GA_main {
     crossover = CrossoverFactory.getCrossoverOperator("SinglePointCrossover", parameters);                   
 
     parameters = new HashMap() ;
-    parameters.put("probability", 1.0/bits) ;
+    parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
     mutation = MutationFactory.getMutationOperator("BitFlipMutation", parameters);                    
     
     /* Selection Operator */

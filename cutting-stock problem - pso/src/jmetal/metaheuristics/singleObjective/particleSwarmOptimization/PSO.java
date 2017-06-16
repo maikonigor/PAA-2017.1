@@ -355,6 +355,8 @@ public class PSO extends Algorithm {
 
     //-> Step 7. Iterations ..        
     while (iteration_ < maxIterations_) {
+      System.out.println("Iteration Number: " + iteration_);
+      System.out.println("Global Best Objective: " + globalBest_.getObjective(0));
       int bestIndividual = (Integer)findBestSolution_.execute(particles_) ;
       try {
         //Compute the speed_

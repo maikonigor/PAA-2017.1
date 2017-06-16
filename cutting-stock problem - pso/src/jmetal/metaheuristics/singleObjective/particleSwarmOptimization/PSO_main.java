@@ -55,7 +55,7 @@ public class PSO_main {
    *      - jmetal.metaheuristics.mocell.MOCell_main problemName
    *      - jmetal.metaheuristics.mocell.MOCell_main problemName ParetoFrontFile
    */
-  public static void main(String [] args) 
+  public static void main(String instance) 
   		throws JMException, IOException, ClassNotFoundException {
     Problem   problem   ;  // The problem to solve
     Algorithm algorithm ;  // The algorithm to use
@@ -76,12 +76,12 @@ public class PSO_main {
 
     //problem = new Sphere("Real", 20); 
     
-    problem = new CuttingStockProblem("instance1.txt");
+    problem = new CuttingStockProblem(instance);
     algorithm = new PSO(problem) ;
     
     // Algorithm parameters
     algorithm.setInputParameter("swarmSize",50); //Old 50
-    algorithm.setInputParameter("maxIterations",200000); //1000000
+    algorithm.setInputParameter("maxIterations",2); //1000000
     
     parameters = new HashMap() ;
     parameters.put("probability", 1.0/problem.getNumberOfVariables()) ;
@@ -99,8 +99,8 @@ public class PSO_main {
     // Result messages 
     logger_.info("Total execution time: "+estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN.txt");
+    population.printObjectivesToFile("FUN_"+instance+".txt");
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR.txt");                         
+    population.printVariablesToFile("VAR_"+instance+".txt");                         
   } //main
 } // PSO_main

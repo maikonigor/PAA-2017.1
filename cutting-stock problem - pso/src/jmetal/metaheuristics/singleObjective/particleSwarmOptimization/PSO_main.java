@@ -99,8 +99,8 @@ public class PSO_main {
     // Result messages 
     logger_.info("Total execution time: "+estimatedTime + "ms");
     logger_.info("Objectives values have been writen to file FUN");
-    population.printObjectivesToFile("FUN_"+instance+".txt");
+    population.printObjectivesToFile("FUN_"+instance,estimatedTime);
     logger_.info("Variables values have been writen to file VAR");
-    population.printVariablesToFile("VAR_"+instance+".txt");                         
+    population.printVariablesToFile("VAR_"+instance);                         
   } //main
 } // PSO_main

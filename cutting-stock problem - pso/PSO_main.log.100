@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-06-18T14:19:09</date>
+  <millis>1497806349806</millis>
+  <sequence>300</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.singleObjective.particleSwarmOptimization.PSO_main</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Total execution time: 17617ms</message>
+</record>
+<record>
+  <date>2017-06-18T14:19:09</date>
+  <millis>1497806349807</millis>
+  <sequence>301</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.singleObjective.particleSwarmOptimization.PSO_main</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Objectives values have been writen to file FUN</message>
+</record>
+<record>
+  <date>2017-06-18T14:19:09</date>
+  <millis>1497806349808</millis>
+  <sequence>302</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.singleObjective.particleSwarmOptimization.PSO_main</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Variables values have been writen to file VAR</message>
+</record>
+</log>

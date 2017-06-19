@@ -22,7 +22,7 @@ public class Main {
 				PSO_main.main("instance17.txt");
 			}
 			
-//			PSO_main.main("instance2.txt");
+//			PSO_main.main("instance1.txt");
 			
 		} catch (ClassNotFoundException | JMException | IOException e) {
 			e.printStackTrace();

@@ -26,11 +26,30 @@ files = [
     "FUN_instance14.txt",
     "FUN_instance17.txt"
     ]
-final = np.array(["Instancia","Pior resultado (\%)", "Melhor Resultado (\%)", "Tempo Medio"])
+
+instancias = [
+    "src/instances/instance1.txt",
+    "src/instances/instance2.txt",
+    "src/instances/instance5.txt",
+    "src/instances/instance7.txt",
+    "src/instances/instance9.txt",
+    "src/instances/instance12.txt",
+    "src/instances/instance13.txt",
+    "src/instances/instance14.txt",
+    "src/instances/instance17.txt"
+    ]
+final = np.array(["Instancia","Dimensao","qtd_pecas","Pior(\%)","Medio (\%)", "Melhor (\%)", "Tempo Medio"])
 
 contador = 0
+ins_data = np.loadtxt(instancias[contador])
+
 for file in files:
     data = np.loadtxt(file)
+    
+    ins_data = np.loadtxt(instancias[contador])
+    quantidades =  ins_data[:,2]
+    quantidade_pecas = int((quantidades.sum() - quantidades[0]) * quantidades[0])
+    dimen_placa = str(int(ins_data[0][0])) + " x " + str(int(ins_data[0][1]))
     min = data.min(axis=0)
     max = data.max(axis=0)
     media = data.mean(axis=0)
@@ -42,13 +61,14 @@ for file in files:
     #m_tempo = formatar_tempo(min[1])
     
     t_medio = formatar_tempo(media[1])
+    r_medio = formatar_resultado(media[0])
     
-    linha = np.array([str(contador), p_result, m_result, t_medio])
+    linha = np.array([str(contador), dimen_placa,quantidade_pecas, p_result, r_medio, m_result, t_medio])
     final = np.vstack((final,linha))
     contador+=1
 
 print final
 
 np.savetxt("resultados.csv", final,delimiter=";",fmt="%s")
- 
+
 

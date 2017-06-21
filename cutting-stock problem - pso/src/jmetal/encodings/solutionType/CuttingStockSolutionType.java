@@ -1,5 +1,9 @@
 package jmetal.encodings.solutionType;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 
 import jmetal.core.Problem;
@@ -97,5 +101,17 @@ public class CuttingStockSolutionType extends IntSolutionType {
 
 		return variables;
 	}//createVariables
+	
+	public static void printEvolution(int iteration, double globalBest){
+		String linha = iteration + " " + globalBest;
+		try(FileWriter fw = new FileWriter("RUN.txt", true);
+			    BufferedWriter bw = new BufferedWriter(fw);
+			    PrintWriter out = new PrintWriter(bw))
+			{
+			    out.println(linha);
+			} catch (IOException e) {
+			    //exception handling left as an exercise for the reader
+			}
+	}
 
 } //CuttingStockSolutionType

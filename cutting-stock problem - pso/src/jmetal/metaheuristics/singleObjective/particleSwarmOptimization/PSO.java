@@ -22,6 +22,7 @@
 package jmetal.metaheuristics.singleObjective.particleSwarmOptimization;
 
 import jmetal.core.*;
+import jmetal.encodings.solutionType.CuttingStockSolutionType;
 import jmetal.operators.selection.BestSolutionSelection;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -377,11 +378,18 @@ public class PSO extends Algorithm {
         problem_.evaluate(particle);
         evaluations_ ++ ;
       }
-
+      
+      double bestSolutionIteration = 1000000;
       //Actualize the memory of this particle
       for (int i = 0; i < particles_.size(); i++) {
         //int flag = comparator_.compare(particles_.get(i), localBest_[i]);
-        //if (flag < 0) { // the new particle is best_ than the older remember        
+        //if (flag < 0) { // the new particle is best_ than the older remember 
+    	  
+    	//Update the best solution for this iteration
+    	if(particles_.get(i).getObjective(0) < bestSolutionIteration){
+    		bestSolutionIteration = particles_.get(i).getObjective(0);
+    	}
+    	  
       	if ((particles_.get(i).getObjective(0) < localBest_[i].getObjective(0))) {
           Solution particle = new Solution(particles_.get(i));
           localBest_[i] = particle;
@@ -392,6 +400,7 @@ public class PSO extends Algorithm {
         } // if
       	
       }
+      CuttingStockSolutionType.printEvolution(iteration_, bestSolutionIteration);
       iteration_++;
     }
     

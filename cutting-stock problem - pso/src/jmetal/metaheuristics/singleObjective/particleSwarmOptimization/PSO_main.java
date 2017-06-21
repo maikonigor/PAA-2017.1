@@ -80,7 +80,7 @@ public class PSO_main {
     algorithm = new PSO(problem) ;
     
     // Algorithm parameters
-    algorithm.setInputParameter("swarmSize",50); //Old 50
+    algorithm.setInputParameter("swarmSize",30); //Old 50
     algorithm.setInputParameter("maxIterations",40000); //1000000
     
     parameters = new HashMap() ;

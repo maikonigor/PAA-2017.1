@@ -60,7 +60,7 @@ public class CuttingStockProblem extends Problem {
 			value = calculaSobra(solution);
 		} else {
 			//value = 5;
-			reparo2(solution);
+			reparo(solution);
 			value = calculaSobra(solution);
 			
 		}

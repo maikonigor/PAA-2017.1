@@ -86,7 +86,13 @@ public class XCutStock extends ArrayInt{
 	public void setValue(int index, int value) throws JMException {
 		if (type_.getClass() == CuttingStockSolutionType.class){
 			ArrayInt array = (ArrayInt) solution_.getDecisionVariables()[index];
-			array.setValue(1, value);
+			
+			if(value > 0)
+				array.setValue(1, value);
+			else
+				array.setValue(1, 0);
+			
+			
 //			solution_.getDecisionVariables()[index].setValue(value) ;
 		}
 		else

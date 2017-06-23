@@ -286,16 +286,19 @@ public class PSO extends Algorithm {
     	XCutStock particle = new XCutStock(particles_.get(i)) ;
       // particle.move(speed_[i]);
       for (int var = 0; var < particle.getNumberOfDecisionVariables(); var++) {
-      	particle.setValue(var, (int) (particle.getValue(var) +  speed_[i][var]));
-      	particle.changePosition(var, (int)speed_[i][var]); //Apos trocar a quantidade de elementos, troca de posicao
-        if (particle.getValue(var) < problem_.getLowerLimit(var)) {
+        
+      	if (particle.getValue(var) < problem_.getLowerLimit(var)) {
           particle.setValue(var, (int) problem_.getLowerLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel1_; //    
         }
-        if (particle.getValue(var) > problem_.getUpperLimit(var)) {
+      	else if (particle.getValue(var) > problem_.getUpperLimit(var)) {
           particle.setValue(var, (int) problem_.getUpperLimit(var));
           speed_[i][var] = speed_[i][var] * ChVel2_; //   
         }
+      	else{
+      		particle.setValue(var, (int) (particle.getValue(var) +  speed_[i][var]));
+      		particle.changePosition(var, (int)speed_[i][var]); //Apos trocar a quantidade de elementos, troca de posicao
+      	}
         
       }
     }
@@ -400,7 +403,7 @@ public class PSO extends Algorithm {
         } // if
       	
       }
-//      CuttingStockSolutionType.printEvolution(iteration_, bestSolutionIteration);
+      CuttingStockSolutionType.printEvolution(iteration_, bestSolutionIteration);
       iteration_++;
     }
     

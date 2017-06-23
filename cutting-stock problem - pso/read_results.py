@@ -2,10 +2,10 @@ import numpy as np
 
 def formatar_tempo(tempo):
     tempo /= 1000
-    tempo = round(tempo, 2)
+    tempo = round(tempo, 4)
     if(tempo > 60):
         tempo /= 60
-        tempo = round(tempo, 2)
+        tempo = round(tempo, 4)
         tempo = str(tempo) + "m"
     else:
          tempo = str(tempo) + "s"
@@ -48,7 +48,7 @@ for file in files:
     
     ins_data = np.loadtxt(instancias[contador])
     quantidades =  ins_data[:,2]
-    quantidade_pecas = int((quantidades.sum() - quantidades[0]) * quantidades[0])
+    quantidade_pecas = int(quantidades[0])
     dimen_placa = str(int(ins_data[0][0])) + " x " + str(int(ins_data[0][1]))
     min = data.min(axis=0)
     max = data.max(axis=0)

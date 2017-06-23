@@ -5,8 +5,10 @@ file = "RUN.txt"
 
 data = np.loadtxt(file)
 
-x = data[:50,0]
-y = data[:50,1]
+x = data[:50 ,0]
+y = data[:50 ,1]
+plt.xlabel('Tempo')
+plt.ylabel('Local Best')
 
 plt.plot(x,y,linewidth=0.5)
 # plt.axis([x.min(), x.max(),y.min(), y.max()])

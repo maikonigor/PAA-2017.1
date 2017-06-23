@@ -182,7 +182,8 @@ public class CuttingStockProblem extends Problem {
 			int var = r.nextInt(posicao.size());
 			ArrayInt array = (ArrayInt) decisionVariables[(int) posicao.get(var)];
 			int qtd = array.getValue(1);
-			array.setValue(1, qtd - 1);
+			if (qtd > 0) 
+				array.setValue(1, qtd - 1);
 //			decisionVariables[var] = array;
 		}
 

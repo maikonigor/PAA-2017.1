@@ -59,8 +59,8 @@ public class CuttingStockProblem extends Problem {
 		if (cabeNaPlaca) {
 			value = calculaSobra(solution);
 		} else {
-			//value = 5;
-			reparo(solution);
+//			value = 5;
+			reparo2(solution);
 			value = calculaSobra(solution);
 			
 		}
@@ -161,7 +161,7 @@ public class CuttingStockProblem extends Problem {
 			ArrayInt array = (ArrayInt) decisionVariables[var];
 			int qtd = array.getValue(1);
 			if (qtd > 0) {
-				array.setValue(1,qtd - 1);
+				array.setValue(1,(qtd - 1));
 			}
 			decisionVariables[var] = array;
 		}
@@ -183,7 +183,7 @@ public class CuttingStockProblem extends Problem {
 			ArrayInt array = (ArrayInt) decisionVariables[(int) posicao.get(var)];
 			int qtd = array.getValue(1);
 			array.setValue(1, qtd - 1);
-			decisionVariables[var] = array;
+//			decisionVariables[var] = array;
 		}
 
 		solution.setDecisionVariables(decisionVariables);

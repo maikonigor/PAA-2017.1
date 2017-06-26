@@ -20,9 +20,10 @@ public class Main {
 //				PSO_main.main("instance13.txt");
 //				PSO_main.main("instance14.txt");
 //				PSO_main.main("instance17.txt");
+//				PSO_main.main("instance_randon.txt");
 //			}
 			
-			PSO_main.main("instance17.txt");
+			PSO_main.main("instance_randon.txt");
 			
 //			for (int i = 0; i < 10; i++) {
 //				MonoRandomSearch_main.main("instance1.txt");

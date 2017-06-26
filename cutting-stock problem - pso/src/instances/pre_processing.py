@@ -41,6 +41,7 @@ def processa_arquivo(arquivo_cut, arquivo_instancia):
         quantidade = calcular_quantidade(plWidth, plHeight, largura_peca, altura_peca)
         new_line = str(largura_peca) + " " + str(altura_peca) + " " + str(quantidade) + "\n"
         arquivo_instancia.write(new_line)
+    return True
 
 def rotacionar_pecas(arquivo_cut, arquivo_aux):
      f_line = arquivo_cut.readline().split(" ")
@@ -53,16 +54,18 @@ def rotacionar_pecas(arquivo_cut, arquivo_aux):
      for linha in arquivo_cut.readlines():
          linha = linha.split(" ")
          linha = remover_espaco(linha)
-         linha_original = linha_original + str(linha[0]) + " " + str(linha[1]) + " " + linha[2] + "\n"
+         linha_original = linha_original + str(linha[0]) + " " + str(linha[1]) + " " + str(linha[2])
          
          if not linha[0] == linha[1]:
-             new_line += str(linha[1]) + " " + str(linha[0]) + " " + linha[2] + "\n"
              quantidade_pecas = quantidade_pecas + 1
+             new_line += str(linha[1]) + " " + str(linha[0]) + " " + str(linha[2])
     
+     new_line = "\n" + new_line
      str_f_line = str(f_line[0]) + " " + str(f_line[1]).strip() + " " + str(quantidade_pecas).strip() + "\n"
      arquivo_aux.write(str_f_line)
      arquivo_aux.write(linha_original)
      arquivo_aux.write(new_line)
+     arquivo_aux.close()
 
 def remover_espaco(linha):
      new_line = []
@@ -71,7 +74,7 @@ def remover_espaco(linha):
             new_line.append(linha[index])
      return new_line
  
-def main():
+def main_():
     
     for x in range(2,18):
         assets = "assets/"
@@ -80,11 +83,11 @@ def main():
         if os.path.exists(cut_name):
             arquivo_aux = open("a.txt","w")
             arquivo_cut = open(cut_name,"r")
-            arquivo_instancia = open(instance_name,"a")
             
             rotacionar_pecas(arquivo_cut, arquivo_aux)
             arquivo_cut.close()
             arquivo_aux = open("a.txt","r")
+            arquivo_instancia = open(instance_name,"a")
             processa_arquivo(arquivo_aux, arquivo_instancia)
             
             arquivo_aux.close()
@@ -92,4 +95,23 @@ def main():
             arquivo_instancia.close()
             print cut_name
 
+def main():
+    cut_name = "assets/cut_randon.txt"
+    instance_name = "instance_randon.txt"
+    if os.path.exists(cut_name):
+        arquivo_aux = open("a.txt","w")
+        arquivo_cut = open(cut_name,"r")
+        arquivo_instancia = open(instance_name,"a")
+        
+        rotacionar_pecas(arquivo_cut, arquivo_aux)
+        arquivo_cut.close()
+        arquivo_aux = open("a.txt","r")
+        processa_arquivo(arquivo_aux, arquivo_instancia)
+        
+        arquivo_aux.close()
+        arquivo_cut.close()
+        arquivo_instancia.close()
+    print cut_name
+
+    
 main()
